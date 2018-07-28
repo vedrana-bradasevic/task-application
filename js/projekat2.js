@@ -2,12 +2,41 @@ document.getElementById("clear-button").onclick = clearAllTasks;
 document.getElementById("add-button").onclick = addNewTask;
 document.getElementById("filter").oninput = filterTasks;
 
-let tasks = [ ];
+let tasks;
+if (localStorage.getItem("newtasks")){
+    tasks = JSON.parse(localStorage.getItem("newtasks"));
+  
+    
+} else {
+   tasks = [ ];
+}
+
+//let tasks = [ ];
+
+
 //////// html
 function refreshTasks(allTasks){
     clearViewTasks();
     printAllTasks(allTasks);
+   localStorage.setItem("newtasks",JSON.stringify(allTasks));
+
 }
+
+//enter key
+let input1 = document.getElementById("new-task");
+let input2 = document.getElementById("priority");
+input1.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("add-button").click();
+    }
+});
+input2.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("add-button").click();
+    }
+});
 
 
 
@@ -35,10 +64,11 @@ function printAllTasks(allTasks){
         icon.className = closeIcon;
         li.appendChild(icon);
         ul.appendChild(li);
+        
     }
 
 }
-
+    //brise tasks iz arraya let tasks
 function clearViewTasks(){
     let ul = document.querySelector('#printed-list');
     let listLength = ul.children.length;
@@ -47,15 +77,15 @@ function clearViewTasks(){
     }
 }
 
-//
+//uzima vrednosti taska i pravi objekat koji stavlja u array task
 printAllTasks(tasks);
 function addNewTask(){
     let getValue = document.getElementById("new-task").value;
     let getPriorityValue = document.getElementById("priority").value;
-    if (!getValue || !getPriorityValue){
-        alert("Invalid entry! Please try again.")
+    if (!getValue && !getPriorityValue ) {
         return;
-    }
+   } 
+  
     let newtask = {
         name: getValue,
         priority: getPriorityValue
@@ -63,14 +93,17 @@ function addNewTask(){
     tasks.push(newtask);
     document.getElementById("new-task").value = "";
     document.getElementById("priority").value = "";
+   
+   
     refreshTasks(tasks);
 }
-
 function clearAllTasks(){
     if(confirm("Do you really want to delete this?")){
-        clearViewTasks();
+      //  clearViewTasks();
         tasks = [];
+        refreshTasks(tasks);
     }
+   
 }
 function clearOneByOne(){
     if(confirm("Do you really want to delete this?")){

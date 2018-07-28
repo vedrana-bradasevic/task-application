@@ -48,6 +48,7 @@ input:focus{
 li{
     height: 30px;
     font-size:20px;
+    margin-bottom: 20px;
 }
 i {
    float:right;
@@ -87,8 +88,9 @@ ul{
     color:rgba(218, 159, 159, 0.76);
 }
 .priority {
-    width:50px;
-    height: 50px;
+    width:20%;
+    height: 20%;
+    
     display: inline-block;
 }
 
@@ -99,14 +101,17 @@ ul{
 
 @media only screen and (max-width: 700px){
     li{
-        font-size:14px;
+      
         line-height: 1;
+        height: 0px;
     }
     .priority{
         height: 100%;
     }
     i {
-        font-size:12px;
+       font-size:12px;
+        margin: 0;
+        
     }
     button {
         margin-top:50px;
